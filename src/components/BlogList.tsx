@@ -1,5 +1,4 @@
 import { createClient } from "contentful";
-
 import { useEffect, useState } from "react";
 
 // Define types based on your data structure
