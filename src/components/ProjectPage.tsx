@@ -2,7 +2,7 @@ const ProjectPage = () => {
   return (
     <>
       <div className=" bg-black h-auto w-full mt-28 overflow-hidden mb-10">
-        <p className="text-fuchsia-300 text-center pt-8 text-lg">My Projects</p>
+        <p className="text-fuchsia-300 text-center pt-8 text-lg">Projects</p>
         <div className="mt-10 grid place-items-center md:grid-cols-3">
           <div className=" text-fuchsia-300 w-56 h-48 ">
             <img
