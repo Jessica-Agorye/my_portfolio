@@ -1,8 +1,31 @@
 import { createClient } from "contentful";
-import { Key, useEffect, useState } from "react";
+
+import { useEffect, useState } from "react";
+
+// Define types based on your data structure
+interface BlogPost {
+  sys: {
+    id: string;
+  };
+  fields: {
+    blogImage: {
+      fields: {
+        file: {
+          url: string;
+        };
+      };
+    };
+    title: string;
+    blogAuthur: string;
+    createdDate: string;
+    postContent: string;
+    blogSummary: string;
+  };
+}
 
 const BlogList = () => {
-  const [blogPost, setBlogPost] = useState([] as any);
+  // Define state with correct type
+  const [blogPosts, setBlogPost] = useState<BlogPost[]>([]);
 
   const client = createClient({
     space: "bt2yilzssp9b",
@@ -12,72 +35,61 @@ const BlogList = () => {
   useEffect(() => {
     const getAllEntries = async () => {
       try {
-        await client.getEntries().then((entries) => {
-          console.log(entries);
-          setBlogPost(entries);
-        });
+        const entries = await client.getEntries<BlogPost>();
+        console.log(entries); // Debug entries structure
+        setBlogPost(entries.items); // Update state with the items array
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching entries:", error);
       }
     };
     getAllEntries();
   }, []);
 
   return (
-    <div className="">
-      <div className=" ">
-        <div>
-          <div className="posts">
-            <h1 className=" text-center pt-7 text-2xl font-semibold">
-              Jessica's Blog
-            </h1>
-            <h2 className=" text-center pt-2">
-              <a href="">Go Back Home</a>
-            </h2>
-            {blogPost?.items?.map(
-              (post: { sys: { id: Key | null | undefined } }) => (
-                <section
-                  className=" text-white bg-black mt-20 pb-10 pt-10 pl-80 "
-                  key={post.sys.id}
-                >
-                  <header className="">
-                    <img
-                      src="/img/quotegenerator.png"
-                      title=""
-                      alt=""
-                      width="578"
-                      height="291"
-                      className=""
-                    />
-                    <h2 className="post-title pt-3"></h2>
-                    <p className="post-meta">
-                      <a href="" className="post-author"></a>
-                      Date <span></span>
-                      <small>Date</small>
-                    </p>
-                  </header>
-                  <div className="">
-                    <p></p>
-                    <button className="">Read More</button>
-                  </div>
-                </section>
-              )
-            )}
-          </div>
-
-          <div className="footer">
-            <div className="pure-menu pure-menu-horizontal">
-              <div className="pure-menu-item">
-                <a
-                  href="http://twitter.com/thecodeangle"
-                  className="pure-menu-link"
-                >
-                  Twitter
-                </a>
+    <div className="mb-5 px-1">
+      <h1 className="text-black text-center text-base font-bold mt-20 mb-2 md:text-xl">
+        Blog Posts
+      </h1>
+      <div className="grid gap-4 grid-cols-1 mt-20 sm:grid-cols-2 lg:grid-cols-3">
+        {blogPosts.length > 0 ? (
+          blogPosts.map((post) => (
+            <section
+              className="text-white bg-black p-2 rounded-lg max-w-xs mx-auto"
+              key={post.sys.id}
+            >
+              <header>
+                <img
+                  src={`https:${post.fields.blogImage.fields.file.url}`}
+                  alt={post.fields.title || "Blog Title"}
+                  width="150"
+                  height="90"
+                  className="mx-auto mb-2 object-cover"
+                />
+                <h2 className="post-title text-sm font-semibold">
+                  {post.fields.title || "Untitled"}
+                </h2>
+                <p className="post-meta mt-1 text-xs">
+                  <span className="post-author mr-1">
+                    {post.fields.blogAuthur || "Unknown Author"}
+                  </span>
+                  <span className="date">
+                    {post.fields.createdDate || "Unknown Date"}
+                  </span>
+                </p>
+              </header>
+              <div className="mt-2">
+                <p className="mb-2 text-xs">
+                  {post.fields.blogSummary || "No content available."}
+                </p>
+                <button className="px-2 py-1 bg-blue-500 text-white rounded text-xs">
+                  Read More
+                </button>
               </div>
-            </div>
-          </div>
-        </div>
+            </section>
+          ))
+        ) : (
+          <p>No blog posts available.</p>
+        )}
       </div>
     </div>
   );
