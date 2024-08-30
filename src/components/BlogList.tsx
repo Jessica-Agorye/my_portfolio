@@ -1,5 +1,6 @@
 import { createClient } from "contentful";
 import { useEffect, useState } from "react";
+import Button from "./atoms/Button";
 
 // Define types based on your data structure
 interface BlogPost {
@@ -46,7 +47,7 @@ const BlogList = () => {
 
   return (
     <div className="mb-5 px-1">
-      <h1 className="text-black text-center text-base font-bold mt-20 mb-2 md:text-xl">
+      <h1 className="text-black text-center text-2xl font-bold mt-20 mb-2 md:text-xl">
         Blog Posts
       </h1>
       <div className="grid gap-4 grid-cols-1 mt-20 sm:grid-cols-2 lg:grid-cols-3">
@@ -80,9 +81,10 @@ const BlogList = () => {
                 <p className="mb-2 text-xs">
                   {post.fields.blogSummary || "No content available."}
                 </p>
-                <button className="px-2 py-1 bg-blue-500 text-white rounded text-xs">
+                <Button className=" text-xs font-bold py-2 px-2 bg-blue-600 text-yellow-50 rounded-md">
+                  {" "}
                   Read More
-                </button>
+                </Button>
               </div>
             </section>
           ))

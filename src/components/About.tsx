@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faHashtag } from "@fortawesome/free-solid-svg-icons";
-
+import Button from "./atoms/Button";
 const About = () => {
   return (
     <>
@@ -8,8 +8,9 @@ const About = () => {
         <div className="mx-2 md:ml-10  lg:ml-24">
           <p className=" text-4xl pt-4 font-bold">Jessica Agorye </p>
           <p className="pt-4 text-xs mt-4 md:mt-6 md:text-lg">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae,
-            aspernatur?
+            Jessica Agorye is a passionate writer and web developer with a
+            strong backgound in content development and building dynamic
+            websites.
           </p>
 
           <ul className="list-disc pl-6 text-xs leading-8 mt-2 md:mt-6 md:text-lg  ">
@@ -28,13 +29,20 @@ const About = () => {
             </ul>
           </div>
 
-          <div className="mt-6 flex items-center justify-center gap-2 md:block">
-            <button className="text-fuchsia-400 border border-black text-xs font-bold py-2 px-2 ">
+          <div className="mt-6 flex items-center justify-center gap-2 ">
+            {/* <button className="text-fuchsia-400 border border-black text-xs font-bold py-2 px-2 ">
               Schedule Call
-            </button>
-            <button className="text-fuchsia-400 border border-black text-xs font-bold py-2 px-2 md:ml-2">
-              WhatsApp
-            </button>
+            </button> */}
+
+            <Button className=" text-xs font-bold py-2 px-2 bg-blue-600 text-yellow-50 rounded-md">
+              {" "}
+              Schedule Call
+            </Button>
+
+            <Button className=" text-xs font-bold py-2 px-2 bg-blue-600 text-yellow-50 rounded-md">
+              {" "}
+              WhatsApp{" "}
+            </Button>
           </div>
         </div>
         <div className=" flex item-center justify-center mt-4">

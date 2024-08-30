@@ -1,10 +1,8 @@
 import Header from "./Header";
 import About from "./About";
 import ProjectPage from "./ProjectPage";
-<<<<<<< HEAD
-=======
 import BlogDetails from "./BlogDetails";
->>>>>>> master
+import Footer from "./Footer";
 
 const MainPage = () => {
   return (
@@ -12,10 +10,8 @@ const MainPage = () => {
       <Header />
       <About />
       <ProjectPage />
-<<<<<<< HEAD
-=======
       <BlogDetails />
->>>>>>> master
+      <Footer />
     </main>
   );
 };

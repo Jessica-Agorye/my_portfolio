@@ -1,42 +1,50 @@
+import Button from "./atoms/Button";
+import { portfolioData } from "../data/data";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+
 const ProjectPage = () => {
+  let settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+  };
+
   return (
-    <>
-      <div className=" bg-black h-auto w-full mt-28 overflow-hidden mb-10">
-        <p className="text-fuchsia-300 text-center pt-8 text-lg">Projects</p>
-        <div className="mt-10 grid place-items-center md:grid-cols-3">
-          <div className=" text-fuchsia-300 w-56 h-48 ">
-            <img
-              src="/img/img4.png"
-              alt=""
-              className="w-full h-32 object-contain border border-fuchsia-200"
-            />
-            <button className=" border border-black text-xs font-bold py-2 px-2 bg-gray-100 mt-2">
-              Go to Page
-            </button>
-          </div>{" "}
-          <div className="text-fuchsia-300 w-56 h-48 ">
-            <img
-              src="/img/quotegenerator.png"
-              alt=""
-              className="w-full h-32 object-contain border border-fuchsia-200"
-            />
-            <button className=" border border-black text-xs font-bold py-2 px-2 bg-gray-100 mt-2 ">
-              Go to Page
-            </button>
-          </div>
-          <div className="text-fuchsia-300 w-56 h-48">
-            <img
-              src="/img/skilledpalshot.png"
-              alt=""
-              className="w-full h-32 object-contain border border-fuchsia-200"
-            />
-            <button className=" border border-black text-xs font-bold py-2 px-2 bg-gray-100 mt-2 ">
-              Go to Page
-            </button>
-          </div>
-        </div>
+    <div className="bg-black h-auto w-full mt-28 overflow-hidden mb-10">
+      <p className="text-white text-center pt-8 text-2xl">Projects</p>
+      <p className="text-white text-center pt-8 text-lg">
+        Wanna view my projects? Just Click!
+      </p>
+      <div className="overflow-hidden mt-4">
+        <Slider {...settings}>
+          {portfolioData.map((project) => (
+            <div
+              key={project.id}
+              className="p-4 flex justify-center items-center"
+            >
+              <div className="text-white  p-4 flex flex-col cursor-pointer">
+                <img
+                  src={project.image}
+                  alt={project.description}
+                  className="w-full h-32 object-cover border border-fuchsia-200 "
+                />
+                <Button
+                  target="blank_"
+                  href={project.link}
+                  className="border border-black text-xs font-bold py-2 px-2 text-yellow-50 "
+                >
+                  {project.description}
+                </Button>
+              </div>
+            </div>
+          ))}
+        </Slider>
       </div>
-    </>
+    </div>
   );
 };
 
