@@ -1,6 +1,8 @@
 import { createClient } from "contentful";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 interface BlogPost {
   id: string;
@@ -20,6 +22,7 @@ const BlogList = () => {
   });
 
   useEffect(() => {
+    AOS.init();
     const getAllEntries = async () => {
       try {
         const entries = await client.getEntries();
@@ -42,7 +45,7 @@ const BlogList = () => {
   }, []);
 
   return (
-    <div className="mb-5 px-1">
+    <div data-aos="fade-up" data-aos-duration="3000" className="mb-5">
       <h1 className="text-black text-center text-2xl font-bold mt-20 mb-2 md:text-xl">
         Blog Posts
       </h1>

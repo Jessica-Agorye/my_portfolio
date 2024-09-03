@@ -9,7 +9,7 @@ const About = () => {
           <p className=" text-4xl pt-4 font-bold">Jessica Agorye </p>
           <p className="pt-4 text-xs mt-4 md:mt-6 md:text-lg">
             Jessica Agorye is a passionate writer and web developer with a
-            strong backgound in content development and building dynamic
+            strong background in content development and building dynamic
             websites.
           </p>
 

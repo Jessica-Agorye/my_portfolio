@@ -1,10 +1,17 @@
+import { useEffect } from "react";
 import Button from "./atoms/Button";
 import { portfolioData } from "../data/data";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const ProjectPage = () => {
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   let settings = {
     dots: true,
     infinite: true,
@@ -23,8 +30,14 @@ const ProjectPage = () => {
   };
 
   return (
-    <div className=" bg-zinc-800 h-auto w-full mt-28 overflow-hidden mb-10">
-      <p className="text-white text-center pt-8 text-2xl">Projects</p>
+    <div
+      data-aos="fade-up"
+      data-aos-duration="3000"
+      className=" bg-zinc-800 h-auto pb-10 mt-28 overflow-hidden "
+    >
+      <p className="text-white text-center pt-8 text-2xl font-semibold md:text-4xl ">
+        Projects
+      </p>
       <img src="img/swirl2.png" alt="swirl" className=" h-14 block mx-auto" />
       <p className="text-white text-center pt-8 text-base md:text-lg">
         Wanna view my projects? Just swipe and click the button!
