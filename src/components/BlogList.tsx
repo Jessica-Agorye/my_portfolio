@@ -1,6 +1,6 @@
 import { createClient } from "contentful";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import Button from "./atoms/Button";
 
 interface BlogPost {
   id: string;
@@ -71,12 +71,9 @@ const BlogList = () => {
               </header>
               <div className="mt-2">
                 <p className="mb-2 text-xs">{post.blogSummary}</p>
-                <Link
-                  to={`/blogDetails/${post.id}`}
-                  className=" text-xs font-bold py-2 px-2 bg-blue-600 text-yellow-50 rounded-md"
-                >
+                <Button className=" text-xs font-bold py-2 px-2 bg-blue-600 text-yellow-50 rounded-md">
                   Read More
-                </Link>
+                </Button>
               </div>
             </section>
           ))
