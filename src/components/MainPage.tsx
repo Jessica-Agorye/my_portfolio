@@ -1,7 +1,7 @@
 import Header from "./Header";
 import About from "./About";
 import ProjectPage from "./ProjectPage";
-import BlogDetails from "./BlogDetails";
+import BlogList from "./BlogList";
 import Footer from "./Footer";
 
 const MainPage = () => {
@@ -10,7 +10,7 @@ const MainPage = () => {
       <Header />
       <About />
       <ProjectPage />
-      <BlogDetails />
+      <BlogList />
       <Footer />
     </main>
   );
