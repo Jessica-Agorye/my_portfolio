@@ -8,13 +8,16 @@ type Button = {
   | React.AnchorHTMLAttributes<HTMLAnchorElement>
 );
 
-const Button = ({ href, children, ...props }: Button) => {
+const Button = ({ href, children, className = "", ...props }: Button) => {
+  const buttonClass = `button ${className}`;
+  const linkClass = `link-button ${className}`;
+
   if (href) {
     return (
       <a
         href={href}
         {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
-        className="link-button"
+        className={linkClass}
       >
         {children}
       </a>
@@ -24,7 +27,7 @@ const Button = ({ href, children, ...props }: Button) => {
   return (
     <button
       {...(props as React.ButtonHTMLAttributes<HTMLButtonElement>)}
-      className="button"
+      className={buttonClass}
     >
       {children}
     </button>

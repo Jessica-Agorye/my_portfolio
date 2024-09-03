@@ -22,7 +22,6 @@ const About = () => {
             <p>Social: </p>
             <ul>
               <li>
-                {" "}
                 <FontAwesomeIcon icon={faX} />
                 <FontAwesomeIcon icon={faHashtag} />
               </li>
@@ -30,18 +29,12 @@ const About = () => {
           </div>
 
           <div className="mt-6 flex items-center justify-center gap-2 ">
-            {/* <button className="text-fuchsia-400 border border-black text-xs font-bold py-2 px-2 ">
-              Schedule Call
-            </button> */}
-
             <Button className=" text-xs font-bold py-2 px-2 bg-blue-600 text-yellow-50 rounded-md">
-              {" "}
               Schedule Call
             </Button>
 
             <Button className=" text-xs font-bold py-2 px-2 bg-blue-600 text-yellow-50 rounded-md">
-              {" "}
-              WhatsApp{" "}
+              WhatsApp
             </Button>
           </div>
         </div>
@@ -49,7 +42,7 @@ const About = () => {
           <img
             src="img/jess2.png"
             alt="my-picture"
-            className=" border-b-2 rounded-full w-6/12 h-60 object-contain md:w-10/12 md:h-72 lg:h-80 "
+            className=" w-6/12 h-60 object-contain md:w-10/12 md:h-72 lg:h-80 "
           />
         </div>
       </div>

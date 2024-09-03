@@ -2,7 +2,6 @@ import { createClient } from "contentful";
 import { useEffect, useState } from "react";
 import Button from "./atoms/Button";
 
-// Define types based on your data structure
 interface BlogPost {
   sys: {
     id: string;
@@ -54,7 +53,7 @@ const BlogList = () => {
         {blogPosts.length > 0 ? (
           blogPosts.map((post) => (
             <section
-              className="text-white bg-black p-2 rounded-lg max-w-xs mx-auto"
+              className="text-white bg-zinc-800  p-2 rounded-lg max-w-xs mx-auto"
               key={post.sys.id}
             >
               <header>
