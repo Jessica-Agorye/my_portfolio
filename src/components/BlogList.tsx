@@ -3,27 +3,15 @@ import { useEffect, useState } from "react";
 import Button from "./atoms/Button";
 
 interface BlogPost {
-  sys: {
-    id: string;
-  };
-  fields: {
-    blogImage: {
-      fields: {
-        file: {
-          url: string;
-        };
-      };
-    };
-    title: string;
-    blogAuthur: string;
-    createdDate: string;
-    postContent: string;
-    blogSummary: string;
-  };
+  id: string;
+  title: string;
+  blogAuthur: string;
+  createdDate: string;
+  blogSummary: string;
+  blogImageUrl: string;
 }
 
 const BlogList = () => {
-  // Define state with correct type
   const [blogPosts, setBlogPost] = useState<BlogPost[]>([]);
 
   const client = createClient({
@@ -34,9 +22,18 @@ const BlogList = () => {
   useEffect(() => {
     const getAllEntries = async () => {
       try {
-        const entries = await client.getEntries<BlogPost>();
-        console.log(entries); // Debug entries structure
-        setBlogPost(entries.items); // Update state with the items array
+        const entries = await client.getEntries();
+
+        const formattedPosts = entries.items.map((entry: any) => ({
+          id: entry.sys.id,
+          title: entry.fields.title || "Untitled",
+          blogAuthur: entry.fields.blogAuthur || "Unknown Author",
+          createdDate: entry.fields.createdDate || "Unknown Date",
+          blogSummary: entry.fields.blogSummary || "No summary available.",
+          blogImageUrl: entry.fields.blogImage?.fields.file.url || "",
+        }));
+
+        setBlogPost(formattedPosts);
       } catch (error) {
         console.error("Error fetching entries:", error);
       }
@@ -54,34 +51,27 @@ const BlogList = () => {
           blogPosts.map((post) => (
             <section
               className="text-white bg-zinc-800  p-2 rounded-lg max-w-xs mx-auto"
-              key={post.sys.id}
+              key={post.id}
             >
               <header>
                 <img
-                  src={`https:${post.fields.blogImage.fields.file.url}`}
-                  alt={post.fields.title || "Blog Title"}
+                  src={`https:${post.blogImageUrl}`}
+                  alt={post.title}
                   width="150"
                   height="90"
                   className="mx-auto mb-2 object-cover"
                 />
                 <h2 className="post-title text-sm font-semibold">
-                  {post.fields.title || "Untitled"}
+                  {post.title}
                 </h2>
                 <p className="post-meta mt-1 text-xs">
-                  <span className="post-author mr-1">
-                    {post.fields.blogAuthur || "Unknown Author"}
-                  </span>
-                  <span className="date">
-                    {post.fields.createdDate || "Unknown Date"}
-                  </span>
+                  <span className="post-author mr-1">{post.blogAuthur}</span>
+                  <span className="date">{post.createdDate}</span>
                 </p>
               </header>
               <div className="mt-2">
-                <p className="mb-2 text-xs">
-                  {post.fields.blogSummary || "No content available."}
-                </p>
+                <p className="mb-2 text-xs">{post.blogSummary}</p>
                 <Button className=" text-xs font-bold py-2 px-2 bg-blue-600 text-yellow-50 rounded-md">
-                  {" "}
                   Read More
                 </Button>
               </div>
