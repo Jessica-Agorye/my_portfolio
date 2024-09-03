@@ -39,10 +39,10 @@ const ProjectPage = () => {
         <p className="text-white text-center pt-8 text-2xl font-semibold md:text-4xl ">
           Projects
         </p>
-        <img src="img/swirl2.png" alt="swirl" className=" h-14 block mx-auto" />
         <p className="text-white text-center pt-8 text-base md:text-lg">
-          Wanna view my projects? Just swipe and click the button!
+          Just swipe and click the button!
         </p>
+
         <div className="overflow-hidden mt-4">
           <Slider {...settings}>
             {portfolioData.map((project) => (

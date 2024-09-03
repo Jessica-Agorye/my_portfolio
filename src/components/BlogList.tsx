@@ -49,6 +49,7 @@ const BlogList = () => {
       <h1 className="text-black text-center text-2xl font-bold mt-20 mb-2 md:text-xl">
         Blog Posts
       </h1>
+      <img src="img/swirl2.png" alt="swirl" className=" h-14 block mx-auto" />
       <div className="grid gap-4 grid-cols-1 mt-20 sm:grid-cols-2 lg:grid-cols-3">
         {blogPosts.length > 0 ? (
           blogPosts.map((post) => (
