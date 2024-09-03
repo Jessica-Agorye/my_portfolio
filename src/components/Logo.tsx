@@ -3,7 +3,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const Logo = () => {
   return (
-    <div className="flex items-center gap-2 lg:text-2xl ">
+    <div className="flex items-center gap-2 lg:text-2xl cursor-pointer">
       <FontAwesomeIcon icon={faEnvelope} />
 
       <p>J.A</p>

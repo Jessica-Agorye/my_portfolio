@@ -25,6 +25,7 @@ const ProjectPage = () => {
   return (
     <div className=" bg-zinc-800 h-auto w-full mt-28 overflow-hidden mb-10">
       <p className="text-white text-center pt-8 text-2xl">Projects</p>
+      <img src="img/swirl2.png" alt="swirl" className=" h-14 block mx-auto" />
       <p className="text-white text-center pt-8 text-base md:text-lg">
         Wanna view my projects? Just swipe and click the button!
       </p>

@@ -18,12 +18,23 @@ const About = () => {
             <li>Creative & Technical Writer </li>
           </ul>
 
-          <div className="flex gap-2 text-xs mt-4 md:text-lg md:mt-6 ">
+          <div className="text-xs mt-4 flex md:text-lg md:mt-6 ">
             <p>Social: </p>
-            <ul>
+            <ul className=" ml-2 flex gap-2 ">
               <li>
-                <FontAwesomeIcon icon={faX} />
-                <FontAwesomeIcon icon={faHashtag} />
+                <a href="https://x.com/jessy_jua" target="_blank">
+                  {" "}
+                  <FontAwesomeIcon icon={faX} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/agoryejessica/"
+                  target="_blank"
+                >
+                  {" "}
+                  <FontAwesomeIcon icon={faHashtag} />
+                </a>
               </li>
             </ul>
           </div>
