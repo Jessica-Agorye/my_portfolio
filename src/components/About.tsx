@@ -28,7 +28,7 @@ const About = () => {
             </ul>
           </div>
 
-          <div className="mt-6 flex items-center justify-center gap-2 ">
+          <div className="mt-6 flex  gap-2 ">
             <Button className=" text-xs font-bold py-2 px-2 bg-blue-600 text-yellow-50 rounded-md">
               Schedule Call
             </Button>
