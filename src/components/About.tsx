@@ -41,7 +41,13 @@ const About = () => {
 
           <div className="mt-6 flex  gap-2 ">
             <Button className=" text-xs font-bold py-2 px-2 bg-blue-600 text-yellow-50 rounded-md">
-              Schedule Call
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSfiXrInrU4VwdSANPi2qHGHIxkOn_PNShwlVeg0msbQDpPHTA/viewform"
+                target="_blank"
+              >
+                {" "}
+                Schedule Call
+              </a>
             </Button>
 
             <Button className=" text-xs font-bold py-2 px-2 bg-blue-600 text-yellow-50 rounded-md">

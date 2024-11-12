@@ -9,11 +9,16 @@ const MainPage = () => {
   return (
     <main>
       <Header />
-      <About />
+      <div id="about">
+        <About />
+      </div>
       <SkillPage />
-      <ProjectPage />
-
-      <BlogList />
+      <div id="projects">
+        <ProjectPage />
+      </div>
+      <div id="blog">
+        <BlogList />
+      </div>
       <Footer />
     </main>
   );

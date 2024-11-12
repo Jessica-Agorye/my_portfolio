@@ -5,9 +5,15 @@ import { useState } from "react";
 const NavLinks = () => {
   return (
     <>
-      <a href="#about">About</a>
-      <a href="/blogList">Blog</a>
-      <a href="#projects">Projects</a>
+      <a href="#about" className="nav-links">
+        About
+      </a>
+      <a href="#blog" className="nav-links">
+        Blog
+      </a>
+      <a href="#projects" className="nav-links">
+        Projects
+      </a>
     </>
   );
 };
