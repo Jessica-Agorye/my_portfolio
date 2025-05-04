@@ -20,6 +20,13 @@ export const portfolioData: Project[] = [
   },
   {
     id: 3,
+    image: "/img/ace.png",
+    description: "Consult Ace",
+    link: "https://consultace.netlify.app/",
+  },
+
+  {
+    id: 4,
     image: "/img/img4.png",
     description: "Calculator",
     link: "https://jua-calculator.netlify.app/",
