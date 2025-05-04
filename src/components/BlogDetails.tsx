@@ -34,7 +34,6 @@ const BlogDetails = () => {
       const getEntryById = async () => {
         try {
           const entry = await client.getEntry(id);
-
           const fields = entry.fields as {
             title?: string;
             blogAuthur?: string;
@@ -69,40 +68,40 @@ const BlogDetails = () => {
   }, [id]);
 
   return (
-    <div className="mb-5 px-4 md:px-8">
-      <Link to="/" className="text-black text-xl font-bold mb-2 md:text-2xl">
-        Blog Posts
+    <div className="px-4 md:px-8 py-10">
+      <Link
+        to="/"
+        className="text-blue-700 hover:underline text-lg font-semibold"
+      >
+        ← Back to Blog Posts
       </Link>
-      <div className="mt-10">
+
+      <div className="mt-8">
         {singleBlogPost ? (
-          <section
-            className="text-white bg-zinc-600 p-4 rounded-lg mx-auto max-w-full overflow-hidden"
-            key={singleBlogPost.id}
-          >
-            <header>
-              <img
-                src={`https:${singleBlogPost.blogImageUrl}`}
-                alt={singleBlogPost.title}
-                className="w-full h-auto max-w-full mx-auto mb-4 object-cover"
-              />
-              <h2 className="post-title text-center text-lg md:text-2xl font-semibold">
+          <section className="bg-zinc-100 text-black rounded-lg p-6 md:p-10 mx-auto max-w-3xl shadow-md space-y-6">
+            <img
+              src={`https:${singleBlogPost.blogImageUrl}`}
+              alt={singleBlogPost.title}
+              className="w-full h-auto rounded-md object-cover"
+            />
+
+            <div className="space-y-2">
+              <h2 className="text-2xl md:text-3xl font-bold text-center">
                 {singleBlogPost.title}
               </h2>
-              <p className="post-meta text-center mt-4 text-sm md:text-base">
-                <span className="post-author">{singleBlogPost.blogAuthur}</span>
-                <span className="date text-xs md:text-base ml-2">
-                  {singleBlogPost.createdDate}
-                </span>
+              <p className="text-center text-sm text-gray-600">
+                {singleBlogPost.blogAuthur} • {singleBlogPost.createdDate}
               </p>
-            </header>
-            <div className="mt-4">
-              <p className="mb-2 text-sm md:text-base leading-relaxed p-2">
-                {singleBlogPost.postContent}
-              </p>
+            </div>
+
+            <div className="text-base leading-relaxed space-y-4">
+              {singleBlogPost.postContent.split("\n").map((para, index) => (
+                <p key={index}>{para}</p>
+              ))}
             </div>
           </section>
         ) : (
-          <p>No blog post available.</p>
+          <p className="text-center text-gray-600">No blog post available.</p>
         )}
       </div>
     </div>
