@@ -8,7 +8,10 @@ const Footer = () => {
         Web Development, and Content Writing Services.
       </p>
       <div className="flex justify-center items-center mt-10 gap-4 text-xl md:text-2xl lg:text-4xl cursor-pointer ">
-        <FontAwesomeIcon icon={faEnvelope} />
+        <a href="mailto:agoryejessica1@gmail.com">
+          {" "}
+          <FontAwesomeIcon icon={faEnvelope} />
+        </a>
 
         <p>J.A</p>
       </div>
