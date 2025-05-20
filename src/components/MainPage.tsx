@@ -9,20 +9,23 @@ const MainPage = () => {
   return (
     <main>
       <Header />
-      <div id="about" className="scroll-mt-28 ">
+
+      <section id="about" className="scroll-mt-28 py-12 md:py-16">
         <About />
-      </div>
-      <div id="skills">
+      </section>
+
+      <section id="skills" className="py-12 md:py-16">
         <SkillPage />
-      </div>
+      </section>
 
-      <div id="projects">
+      <section id="projects" className="py-12 md:py-16">
         <ProjectPage />
-      </div>
+      </section>
 
-      <div id="blog">
+      <section id="blog" className="py-12 md:py-16">
         <BlogList />
-      </div>
+      </section>
+
       <Footer />
     </main>
   );
