@@ -1,55 +1,75 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { navItems } from "../utils/NavData";
 
-const NavLinks = () => {
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <>
-      <a href="#about" className="nav-links">
-        About
-      </a>
-      <a href="#blog" className="nav-links">
-        Blog
-      </a>
-      <a href="#projects" className="nav-links">
-        Projects
-      </a>
-    </>
+    <nav className="relative md:static flex justify-between items-center p-2 md:p-0">
+      {/* Left placeholder (e.g., logo or empty space) */}
+      <div className="flex-shrink-0">
+        {/* You can add a logo here if needed, or leave empty */}
+      </div>
+
+      {/* Hamburger button - visible on small screens */}
+      <button
+        className="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle menu"
+      >
+        <svg
+          className="w-6 h-6 text-white"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {isOpen ? (
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          ) : (
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          )}
+        </svg>
+      </button>
+
+      {/* Menu Items */}
+      <ul
+        className={`
+          md:flex md:flex-row md:items-center gap-4
+          absolute md:static bg-black md:bg-transparent
+          w-screen md:w-auto left-0 top-full md:top-auto
+          transition-all duration-300 ease-in-out
+          ${isOpen ? "block py-4" : "hidden md:block"}
+          z-10
+        `}
+      >
+        {navItems.map(({ label, href }) => (
+          <li
+            key={label}
+            className="text-white px-4 py-2 hover:bg-gray-700 md:hover:bg-transparent md:px-4"
+          >
+            <a
+              href={href}
+              onClick={() => setIsOpen(false)} // close menu on link click (mobile)
+              className="block"
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 
-const Nav = () => {
-  const [isOpen, setIsOpen] = useState(false); // track open and close state
-
-  const toggleNavbar = () => {
-    setIsOpen(!isOpen);
-  };
-
-  return (
-    <>
-      <nav className="flex w-1/3 justify-end lg:w-1/6 lg:text-lg">
-        <div className="hidden w-full justify-between md:flex">
-          <NavLinks />
-        </div>
-
-        <div className="md:hidden">
-          <button onClick={toggleNavbar}>
-            {isOpen ? (
-              <FontAwesomeIcon icon={faXmark} />
-            ) : (
-              <FontAwesomeIcon icon={faBars} />
-            )}
-          </button>
-        </div>
-      </nav>
-
-      {isOpen && (
-        <div className=" flex basis-full flex-col items-center">
-          <NavLinks />
-        </div>
-      )}
-    </>
-  );
-};
-
-export default Nav;
+export default Navbar;

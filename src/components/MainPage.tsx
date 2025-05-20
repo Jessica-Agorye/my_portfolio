@@ -9,13 +9,17 @@ const MainPage = () => {
   return (
     <main>
       <Header />
-      <div id="about">
+      <div id="about" className="scroll-mt-28 ">
         <About />
       </div>
-      <SkillPage />
+      <div id="skills">
+        <SkillPage />
+      </div>
+
       <div id="projects">
         <ProjectPage />
       </div>
+
       <div id="blog">
         <BlogList />
       </div>

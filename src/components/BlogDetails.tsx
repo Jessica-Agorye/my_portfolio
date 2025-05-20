@@ -68,42 +68,41 @@ const BlogDetails = () => {
   }, [id]);
 
   return (
-    <div className="px-4 md:px-8 py-10">
+    <div className="px-4 md:px-8 py-12 bg-gray-50 min-h-screen">
       <Link
         to="/"
-        className="text-blue-700 hover:underline text-lg font-semibold"
+        className="inline-block text-blue-600 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-md mb-6 font-semibold transition-colors duration-300"
       >
         ← Back to Blog Posts
       </Link>
 
-      <div className="mt-8">
-        {singleBlogPost ? (
-          <section className="bg-zinc-100 text-black rounded-lg p-6 md:p-10 mx-auto max-w-3xl shadow-md space-y-6">
-            <img
-              src={`https:${singleBlogPost.blogImageUrl}`}
-              alt={singleBlogPost.title}
-              className="w-full h-auto rounded-md object-cover"
-            />
+      {singleBlogPost ? (
+        <article className="bg-white rounded-xl shadow-lg max-w-3xl mx-auto p-8 md:p-12 space-y-8">
+          <img
+            src={`https:${singleBlogPost.blogImageUrl}`}
+            alt={singleBlogPost.title}
+            className="w-full h-64 md:h-80 object-cover rounded-lg shadow-md"
+          />
 
-            <div className="space-y-2">
-              <h2 className="text-2xl md:text-3xl font-bold text-center">
-                {singleBlogPost.title}
-              </h2>
-              <p className="text-center text-sm text-gray-600">
-                {singleBlogPost.blogAuthur} • {singleBlogPost.createdDate}
-              </p>
-            </div>
+          <header className="space-y-3 text-center">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
+              {singleBlogPost.title}
+            </h1>
+            <p className="text-gray-600 text-sm md:text-base">
+              {singleBlogPost.blogAuthur} &bull;{" "}
+              {new Date(singleBlogPost.createdDate).toLocaleDateString()}
+            </p>
+          </header>
 
-            <div className="text-base leading-relaxed space-y-4">
-              {singleBlogPost.postContent.split("\n").map((para, index) => (
-                <p key={index}>{para}</p>
-              ))}
-            </div>
+          <section className="prose prose-gray max-w-none mx-auto leading-relaxed text-gray-800">
+            {singleBlogPost.postContent.split("\n").map((para, index) => (
+              <p key={index}>{para}</p>
+            ))}
           </section>
-        ) : (
-          <p className="text-center text-gray-600">No blog post available.</p>
-        )}
-      </div>
+        </article>
+      ) : (
+        <p className="text-center text-gray-500 mt-20">No blog post available.</p>
+      )}
     </div>
   );
 };

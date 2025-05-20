@@ -1,6 +1,7 @@
 import { createClient } from "contentful";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -27,6 +28,7 @@ const BlogList = () => {
       try {
         const entries = await client.getEntries();
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const formattedPosts = entries.items.map((entry: any) => ({
           id: entry.sys.id,
           title: entry.fields.title || "Untitled",
@@ -45,47 +47,57 @@ const BlogList = () => {
   }, []);
 
   return (
-    <div data-aos="fade-up" data-aos-duration="3000" className="mb-5">
-      <h1 className="text-black text-center text-2xl font-bold mt-20 mb-2 md:text-xl">
-        Blog Posts
-      </h1>
-      <img src="img/swirl2.png" alt="swirl" className=" h-14 block mx-auto" />
-      <div className="grid gap-4 grid-cols-1 mt-20 sm:grid-cols-2 lg:grid-cols-3">
+    <div
+      data-aos="fade-up"
+      data-aos-duration="3000"
+      className="mb-10 px-4 max-w-7xl mx-auto"
+    >
+      {/* Intro Section */}
+      <header className="text-center max-w-3xl mx-auto mt-20 mb-12 px-4">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+          Blog
+        </h2>
+        <p className="text-gray-700 text-lg md:text-xl">
+          Explore in-depth articles, insightful stories, and the latest trends
+          that inspire creativity and knowledge in tech and beyond.
+        </p>
+      </header>
+
+      {/* Blog Cards */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {blogPosts.length > 0 ? (
-          blogPosts.map((post) => (
-            <section
-              className="text-white bg-zinc-800  p-2 rounded-lg max-w-xs mx-auto"
+          blogPosts.map((post, index) => (
+            <motion.section
               key={post.id}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="bg-zinc-800 text-white p-4 rounded-xl shadow-lg hover:shadow-xl transition-shadow max-w-sm mx-auto"
             >
               <header>
                 <img
                   src={`https:${post.blogImageUrl}`}
                   alt={post.title}
-                  width="150"
-                  height="90"
-                  className="mx-auto mb-2 object-cover"
+                  className="w-full h-48 object-cover rounded-md mb-3"
                 />
-                <h2 className="post-title text-sm font-semibold">
-                  {post.title}
-                </h2>
-                <p className="post-meta mt-1 text-xs">
-                  <span className="post-author mr-1">{post.blogAuthur}</span>
-                  <span className="date">{post.createdDate}</span>
+                <h3 className="text-lg font-semibold mb-1">{post.title}</h3>
+                <p className="text-sm text-gray-300 mb-2">
+                  {post.blogAuthur} &middot; {post.createdDate}
                 </p>
               </header>
-              <div className="mt-2">
-                <p className="mb-2 text-xs">{post.blogSummary}</p>
-                <Link
-                  to={`/blogDetails/${post.id}`}
-                  className=" text-xs font-bold py-2 px-2 bg-blue-600 text-yellow-50 rounded-md"
-                >
-                  Read More
-                </Link>
-              </div>
-            </section>
+              <p className="text-sm mb-4">{post.blogSummary}</p>
+              <Link
+                to={`/blogDetails/${post.id}`}
+                className="inline-block bg-blue-600 text-yellow-50 text-sm font-medium px-4 py-2 rounded hover:bg-blue-700 transition"
+              >
+                Read More
+              </Link>
+            </motion.section>
           ))
         ) : (
-          <p>No blog posts available.</p>
+          <p className="text-center text-gray-700 col-span-full">
+            No blog posts available.
+          </p>
         )}
       </div>
     </div>

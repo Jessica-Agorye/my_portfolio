@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -7,39 +8,54 @@ const SkillPage = () => {
     AOS.init();
   }, []);
 
+  const stack = ["MongoDB", "Express.js", "React", "Node.js"];
+  const technologies = [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "TailwindCSS",
+    "Git | GitHub",
+  ];
+
   return (
-    <div
-      data-aos="zoom-in-up"
-      data-aos-duration="3000"
-      className="mt-16  grid grid-cols-1 md:grid-cols-2 gap-4  text-sm md:text-base rounded-tr-lg"
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1.2 }}
+      className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm md:text-base rounded-tr-lg px-4"
     >
-      <div className="  ">
-        <p className=" font-bold pl-2 md:pl-4 lg:pl-48">Stack: MERN</p>
-        <div className=" ml-2 md:ml-4 lg:pl-44 ">
-          <ul className=" flex gap-2">
-            <li className="pr-2 md:pr-3">MongoDB</li>
-            <li className="pr-2 md:pr-3">Express.js</li>
-            <li className="pr-2 md:pr-3">React</li>
-            <li>Node.js</li>
-          </ul>
-        </div>
+      {/* Stack Section */}
+      <div className="bg-gray-100 p-4 rounded-md shadow-md">
+        <p className="font-bold text-gray-800 mb-2">Stack: MERN</p>
+        <ul className="flex flex-wrap gap-3 pl-2">
+          {stack.map((tech, index) => (
+            <li
+              key={index}
+              className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs md:text-sm"
+            >
+              {tech}
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <div className=" mt-2  md:mt-0 ">
-        <div className="bg-black rounded-r-lg text-white">
-          <p className=" text-white pl-2 md:pl-4">Technologies</p>
+      {/* Technologies Section */}
+      <div className="bg-gray-100 p-4 rounded-md shadow-md">
+        <div className="bg-black text-white px-3 py-1 rounded-md inline-block mb-2">
+          <p className="text-sm md:text-base">Technologies</p>
         </div>
-        <div className="">
-          <ul className="pl-2  flex flex-wrap md:gap-2">
-            <li className="pr-2 md:pr-3">HTML</li>
-            <li className="pr-2 md:pr-3">CSS</li>
-            <li className="pr-2 md:pr-3">JavaScript</li>
-            <li className="pr-2 md:pr-3">TailwindCSS</li>
-            <li>Git|GitHub</li>
-          </ul>
-        </div>
+        <ul className="flex flex-wrap gap-3 pl-2">
+          {technologies.map((tech, index) => (
+            <li
+              key={index}
+              className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs md:text-sm"
+            >
+              {tech}
+            </li>
+          ))}
+        </ul>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
