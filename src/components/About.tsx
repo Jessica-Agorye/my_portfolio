@@ -17,10 +17,10 @@ const About = () => {
         <h1 className="text-4xl font-bold text-blue-900">Jessica Agorye</h1>
 
         <p className="pt-4 text-sm md:text-lg text-gray-700">
-          I’m a passionate writer and web developer with a love for turning
-          ideas into impactful digital experiences. With a strong foundation in
-          both content and code, I help people tell stories and build
-          functional, beautiful websites.
+          I’m a writer and web developer with a love for turning ideas into
+          impactful digital experiences. I simplify complex topics for better
+          understanding and create websites that are functional and visually
+          engaging.
         </p>
 
         <div className="mt-4 space-y-2 text-sm md:text-base">
