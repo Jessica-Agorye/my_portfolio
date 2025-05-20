@@ -25,16 +25,16 @@ const About = () => {
 
         <div className="mt-4 space-y-2 text-sm md:text-base">
           <p>
-            <strong> Currently learning:</strong> Performance optimization and
-            advanced animations
+            <strong> Currently learning:</strong> Performance optimization,
+            animations, Backend and Server Development.
           </p>
           <p>
-            <strong> Working on:</strong> A portfolio redesign and a personal
-            blog system
+            <strong> Working on:</strong> Building a server using Node.js,
+            Express, and MongoDB (a NoSQL database).
           </p>
           <p>
             <strong> Goal:</strong> Combine creativity and logic to solve
-            real-world problems through web technology
+            real-world problems using web technologies.
           </p>
         </div>
 
