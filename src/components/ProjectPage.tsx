@@ -12,6 +12,7 @@ const ProjectPage = () => {
     AOS.init({ once: true });
   }, []);
 
+  // eslint-disable-next-line prefer-const
   let settings = {
     dots: true,
     infinite: true,
@@ -54,14 +55,13 @@ const ProjectPage = () => {
       </p>
 
       <Slider {...settings}>
-        {portfolioData.map(({ id, image, link, title, description }) => (
+        {portfolioData.map(({ id, image, link, description }) => (
           <div key={id} className="px-4">
             <div
               className="bg-white rounded-xl overflow-hidden shadow-lg
                 transform transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl
                 flex flex-col cursor-pointer"
               tabIndex={0} // for keyboard focus
-              aria-label={`Project: ${title}`}
             >
               <div className="relative w-full h-56 md:h-48 overflow-hidden">
                 <img
@@ -73,9 +73,6 @@ const ProjectPage = () => {
               </div>
 
               <div className="p-6 flex flex-col flex-grow">
-                <h3 className="text-gray-900 text-xl font-semibold mb-2">
-                  {title}
-                </h3>
                 <p className="text-gray-700 text-sm flex-grow mb-4 leading-relaxed">
                   {description}
                 </p>
