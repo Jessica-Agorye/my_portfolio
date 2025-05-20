@@ -12,21 +12,16 @@ export const portfolioData: Project[] = [
     description: "Skilled Pal",
     link: "https://www.skilledpal.com",
   },
+
   {
     id: 2,
-    image: "/img/quotegenerator.png",
-    description: "Quote Generator",
-    link: "https://pulseinspo.netlify.app/",
-  },
-  {
-    id: 3,
     image: "/img/ace.png",
     description: "Consult Ace",
     link: "https://consultace.netlify.app/",
   },
 
   {
-    id: 4,
+    id: 3,
     image: "/img/img4.png",
     description: "Calculator",
     link: "https://jua-calculator.netlify.app/",
