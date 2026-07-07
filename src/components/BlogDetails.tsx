@@ -94,14 +94,19 @@ const BlogDetails = () => {
             </p>
           </header>
 
-          <section className="prose prose-gray max-w-none mx-auto leading-relaxed text-gray-800">
-            {singleBlogPost.postContent.split("\n").map((para, index) => (
-              <p key={index}>{para}</p>
-            ))}
+          <section className="space-y-6 text-gray-800 text-lg leading-8">
+            {singleBlogPost.postContent
+              .split(/\n+/)
+              .filter((para) => para.trim())
+              .map((para, index) => (
+                <p key={index}>{para}</p>
+              ))}
           </section>
         </article>
       ) : (
-        <p className="text-center text-gray-500 mt-20">No blog post available.</p>
+        <p className="text-center text-gray-500 mt-20">
+          No blog post available.
+        </p>
       )}
     </div>
   );
