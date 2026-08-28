@@ -10,7 +10,7 @@ export const portfolioData: Project[] = [
     id: 1,
     image: "/img/skilledpalshot.png",
     description: "Skilled Pal",
-    link: "https://www.skilledpal.com",
+    link: "https://skilled-pal.vercel.app/",
   },
 
   {
@@ -25,5 +25,12 @@ export const portfolioData: Project[] = [
     image: "/img/img4.png",
     description: "Calculator",
     link: "https://jua-calculator.netlify.app/",
+  },
+
+  {
+    id: 4,
+    image: "/img/altusclean.png",
+    description: "Cleaning Services Company",
+    link: "https://www.altuscleaningservices.com/",
   },
 ];
