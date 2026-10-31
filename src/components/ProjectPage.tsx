@@ -46,7 +46,7 @@ const ProjectPage = () => {
             </p>
 
             <h2 className="text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl">
-              Projects & <span className="text-blue-700">Experiments.</span>
+              Projects & <span className="text-blue-700">More Projects!</span>
             </h2>
 
             <p className="mt-5 max-w-xl text-base leading-8 text-slate-600 md:text-lg">
