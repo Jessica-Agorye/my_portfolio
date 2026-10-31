@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faHashtag } from "@fortawesome/free-solid-svg-icons";
+import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { motion } from "framer-motion";
 import Button from "./atoms/Button";
 import LottiePlayer from "./LottiePlayer";
@@ -92,6 +93,15 @@ const About = () => {
               className="transition-colors hover:text-blue-700"
             >
               <FontAwesomeIcon icon={faHashtag} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/agorye-jessica-156717198/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Jessica on LinkedIn"
+              className="transition-colors hover:text-blue-700"
+            >
+              <FontAwesomeIcon icon={faLinkedin} />
             </a>
           </div>
         </motion.div>
