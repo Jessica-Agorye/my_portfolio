@@ -2,6 +2,7 @@ import { createClient } from "contentful";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { publishedArticles } from "../data/publishedData";
 
 interface BlogPost {
   id: string;
@@ -80,7 +81,7 @@ const BlogList = () => {
           id="blog-heading"
           className="text-center text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl"
         >
-          Writing & Ideas<span className="text-blue-700">.</span>
+          Articles & Insights<span className="text-blue-700">.</span>
         </h2>
 
         <p className="mt-5 text-center text-base leading-8 text-slate-600 md:text-lg">
@@ -88,6 +89,37 @@ const BlogList = () => {
           shape how we build and understand technology.
         </p>
       </header>
+
+      {/* External Published Articles */}
+      <section className="max-w-3xl mx-auto mb-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Published On</h2>
+
+        <p className="text-gray-600 mb-6">Explore articles by the author.</p>
+
+        <div className="divide-y divide-gray-200 border-y border-gray-200">
+          {publishedArticles.map((article) => (
+            <a
+              key={article.id}
+              href={article.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between gap-4 py-5 group"
+            >
+              <div>
+                <h3 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
+                  {article.title}
+                </h3>
+
+                <p className="text-sm text-gray-500 mt-1">
+                  {article.publication}
+                </p>
+              </div>
+
+              <span className="text-gray-400 group-hover:text-blue-600">↗</span>
+            </a>
+          ))}
+        </div>
+      </section>
 
       {isLoading && (
         <p role="status" className="py-12 text-center text-sm text-slate-500">

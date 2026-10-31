@@ -2,6 +2,7 @@ import { createClient } from "contentful";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
+
 interface BlogImage {
   fields: {
     file: {
@@ -20,51 +21,65 @@ interface BlogPost {
   postContent: string;
 }
 
+// Create Contentful client outside the component
+
+const client = createClient({
+  space: import.meta.env.VITE_CONTENTFUL_SPACE_ID,
+  accessToken: import.meta.env.VITE_CONTENTFUL_ACCESS_TOKEN,
+});
+
 const BlogDetails = () => {
   const [singleBlogPost, setSingleBlogPost] = useState<BlogPost | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const { id } = useParams<string>();
 
-  const client = createClient({
-    space: "bt2yilzssp9b",
-    accessToken: "zNXP81qloAXT-pLLX8gpZda775EcmjWffOfTWKpoNa8",
-  });
-
   useEffect(() => {
-    if (id) {
-      const getEntryById = async () => {
-        try {
-          const entry = await client.getEntry(id);
-          const fields = entry.fields as {
-            title?: string;
-            blogAuthur?: string;
-            createdDate?: string;
-            blogSummary?: string;
-            postContent?: string;
-            blogImage?: BlogImage;
-          };
+    const getEntryById = async () => {
+      if (!id) {
+        setError("No blog post ID provided.");
+        setIsLoading(false);
+        return;
+      }
 
-          const blogImageUrl = fields.blogImage?.fields.file.url || "";
+      try {
+        setIsLoading(true);
+        setError(null);
 
-          const formattedPost: BlogPost = {
-            id: entry.sys.id,
-            title: fields.title || "Untitled",
-            blogAuthur: fields.blogAuthur || "Unknown Author",
-            createdDate: fields.createdDate || "Unknown Date",
-            blogSummary: fields.blogSummary || "No summary available.",
-            postContent: fields.postContent || "No content available.",
-            blogImageUrl: blogImageUrl,
-          };
+        const entry = await client.getEntry(id);
 
-          setSingleBlogPost(formattedPost);
-        } catch (error) {
-          console.error("Error fetching entry:", error);
-        }
-      };
+        const fields = entry.fields as {
+          title?: string;
+          blogAuthur?: string;
+          createdDate?: string;
+          blogSummary?: string;
+          postContent?: string;
+          blogImage?: BlogImage;
+        };
 
-      getEntryById();
-    } else {
-      console.error("No ID provided in URL");
-    }
+        const blogImageUrl = fields.blogImage?.fields.file.url || "";
+
+        const formattedPost: BlogPost = {
+          id: entry.sys.id,
+          title: fields.title || "Untitled",
+          blogAuthur: fields.blogAuthur || "Unknown Author",
+          createdDate: fields.createdDate || "Unknown Date",
+          blogSummary: fields.blogSummary || "No summary available.",
+          postContent: fields.postContent || "No content available.",
+          blogImageUrl,
+        };
+
+        setSingleBlogPost(formattedPost);
+      } catch (error) {
+        console.error("Error fetching entry:", error);
+        setError("Unable to load this blog post. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    getEntryById();
   }, [id]);
 
   return (
@@ -76,33 +91,47 @@ const BlogDetails = () => {
         ← Back to Blog Posts
       </Link>
 
-      {singleBlogPost ? (
-        <article className="bg-white rounded-xl shadow-lg max-w-3xl mx-auto p-8 md:p-12 space-y-8">
-          <img
-            src={`https:${singleBlogPost.blogImageUrl}`}
-            alt={singleBlogPost.title}
-            className="w-full h-64 md:h-80 object-cover rounded-lg shadow-md"
-          />
+      {isLoading ? (
+        <p className="text-center text-gray-500 mt-20">Loading blog post...</p>
+      ) : error ? (
+        <p className="text-center text-red-500 mt-20">{error}</p>
+      ) : singleBlogPost ? (
+        <>
+          {/* Blog Article */}
+          <article className="bg-white rounded-xl shadow-lg max-w-3xl mx-auto p-8 md:p-12 space-y-8">
+            {singleBlogPost.blogImageUrl && (
+              <img
+                src={`https:${singleBlogPost.blogImageUrl}`}
+                alt={singleBlogPost.title}
+                className="w-full h-64 md:h-80 object-cover rounded-lg shadow-md"
+              />
+            )}
 
-          <header className="space-y-3 text-center">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
-              {singleBlogPost.title}
-            </h1>
-            <p className="text-gray-600 text-sm md:text-base">
-              {singleBlogPost.blogAuthur} &bull;{" "}
-              {new Date(singleBlogPost.createdDate).toLocaleDateString()}
-            </p>
-          </header>
+            <header className="space-y-3 text-center">
+              <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
+                {singleBlogPost.title}
+              </h1>
 
-          <section className="space-y-6 text-gray-800 text-lg leading-8">
-            {singleBlogPost.postContent
-              .split(/\n+/)
-              .filter((para) => para.trim())
-              .map((para, index) => (
-                <p key={index}>{para}</p>
-              ))}
-          </section>
-        </article>
+              <p className="text-gray-600 text-sm md:text-base">
+                {singleBlogPost.blogAuthur} &bull;{" "}
+                {singleBlogPost.createdDate !== "Unknown Date"
+                  ? new Date(singleBlogPost.createdDate).toLocaleDateString()
+                  : "Unknown Date"}
+              </p>
+            </header>
+
+            <section className="space-y-6 text-gray-800 text-lg leading-8">
+              {singleBlogPost.postContent
+                .split(/\n+/)
+                .filter((para) => para.trim())
+                .map((para, index) => (
+                  <p key={index}>{para}</p>
+                ))}
+            </section>
+          </article>
+
+        
+        </>
       ) : (
         <p className="text-center text-gray-500 mt-20">
           No blog post available.
