@@ -27,7 +27,7 @@ export const publishedArticles: PublishedArticle[] = [
   {
     id: 4,
     title: "We Are Obsessing Over VS Angel ELSA HOSK’s Street Style",
-    publication: "StyleRave",
+    publication: "Style Rave",
     url: "https://www.stylerave.com/we-are-obsessing-over-victorias-secret-angel-elsa-hosk/",
   },
 ];
