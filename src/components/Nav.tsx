@@ -6,12 +6,8 @@ const Navbar = () => {
 
   return (
     <nav className="relative md:static flex justify-between items-center p-2 md:p-0">
-      {/* Left placeholder (e.g., logo or empty space) */}
-      <div className="flex-shrink-0">
-        {/* You can add a logo here if needed, or leave empty */}
-      </div>
+      <div className="flex-shrink-0"></div>
 
-      {/* Hamburger button - visible on small screens */}
       <button
         className="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
         onClick={() => setIsOpen(!isOpen)}

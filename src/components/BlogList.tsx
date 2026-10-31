@@ -2,8 +2,6 @@ import { createClient } from "contentful";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 interface BlogPost {
   id: string;
@@ -14,119 +12,184 @@ interface BlogPost {
   blogImageUrl: string;
 }
 
+const client = createClient({
+  space: "bt2yilzssp9b",
+  accessToken: "zNXP81qloAXT-pLLX8gpZda775EcmjWffOfTWKpoNa8",
+});
+
 const BlogList = () => {
   const [blogPosts, setBlogPost] = useState<BlogPost[]>([]);
-
-  const client = createClient({
-    space: "bt2yilzssp9b",
-    accessToken: "zNXP81qloAXT-pLLX8gpZda775EcmjWffOfTWKpoNa8",
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    AOS.init();
     const getAllEntries = async () => {
       try {
         const entries = await client.getEntries();
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const formattedPosts = entries.items.map((entry: any) => ({
-          id: entry.sys.id,
-          title: entry.fields.title || "Untitled",
-          blogAuthur: entry.fields.blogAuthur || "Unknown Author",
-          createdDate: entry.fields.createdDate || "Unknown Date",
-          blogSummary: entry.fields.blogSummary || "No summary available.",
-          blogImageUrl: entry.fields.blogImage?.fields.file.url || "",
-        }));
+        const formattedPosts: BlogPost[] = entries.items.map((entry) => {
+          const fields = entry.fields as {
+            title?: string;
+            blogAuthur?: string;
+            createdDate?: string;
+            blogSummary?: string;
+            blogImage?: {
+              fields?: {
+                file?: {
+                  url?: string;
+                };
+              };
+            };
+          };
+
+          return {
+            id: entry.sys.id,
+            title: fields.title || "Untitled",
+            blogAuthur: fields.blogAuthur || "Jessica Agorye",
+            createdDate: fields.createdDate || "",
+            blogSummary:
+              fields.blogSummary || "Read the article to learn more.",
+            blogImageUrl: fields.blogImage?.fields?.file?.url || "",
+          };
+        });
 
         setBlogPost(formattedPosts);
-      } catch (error) {
-        console.error("Error fetching entries:", error);
+      } catch (err) {
+        console.error("Error fetching blog posts:", err);
+        setError(true);
+      } finally {
+        setIsLoading(false);
       }
     };
+
     getAllEntries();
   }, []);
 
   return (
-    <div
-      data-aos="fade-up"
-      data-aos-duration="2000"
-      className="mb-20 px-4 max-w-7xl mx-auto"
+    <section
+      id="blog"
+      aria-labelledby="blog-heading"
+      className="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28 lg:px-16"
     >
-      {/* Header */}
-      <header className="text-center max-w-2xl mx-auto mt-20 mb-12 px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-black mb-4 tracking-tight">
-          My Blog
+      <header className="mx-auto mb-14 max-w-2xl">
+        <p className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">
+          Notes & Insights
+        </p>
+
+        <h2
+          id="blog-heading"
+          className="text-center text-4xl font-semibold tracking-tight text-slate-950 md:text-5xl"
+        >
+          Writing & Ideas<span className="text-blue-700">.</span>
         </h2>
-        <p className="text-gray-400 text-lg md:text-xl leading-relaxed">
-          Find stories about web development, growth and fresh perspectives
-          about of tech, innovation, and life in general.
+
+        <p className="mt-5 text-center text-base leading-8 text-slate-600 md:text-lg">
+          Exploring web development, technical concepts, and the ideas that
+          shape how we build and understand technology.
         </p>
       </header>
 
-      {/* Grid of Cards */}
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-        {blogPosts.length > 0 ? (
-          blogPosts.map((post, index) => (
-            <motion.section
-              key={post.id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              viewport={{ once: true }}
-              className="bg-white/10 backdrop-blur-lg border border-white/20 text-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col"
-            >
-              <div className="relative group">
-                <img
-                  src={`https:${post.blogImageUrl}`}
-                  alt={post.title}
-                  className="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity rounded-t-2xl" />
-              </div>
+      {isLoading && (
+        <p role="status" className="py-12 text-center text-sm text-slate-500">
+          Loading articles...
+        </p>
+      )}
 
-              <div className="p-5 flex flex-col flex-grow">
-                <h3 className="text-xl font-semibold mb-2 text-gray-200 hover:text-blue-400 transition">
-                  {post.title}
-                </h3>
-                <p className="text-sm text-gray-400 mb-1 font-medium">
-                  ✒️ {post.blogAuthur} ·{" "}
-                  <span className="italic text-gray-500">
-                    {post.createdDate}
-                  </span>
+      {!isLoading && error && (
+        <div className="rounded-2xl border border-slate-200 bg-slate-50 px-6 py-10 text-center">
+          <p className="font-medium text-slate-800">
+            We couldn't load the articles.
+          </p>
+          <p className="mt-2 text-sm text-slate-500">Please try again later.</p>
+        </div>
+      )}
+
+      {!isLoading && !error && blogPosts.length > 0 && (
+        <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          {blogPosts.map((post, index) => (
+            <motion.article
+              key={post.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.45,
+                delay: (index % 3) * 0.1,
+              }}
+              viewport={{ once: true, amount: 0.15 }}
+              className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl hover:shadow-slate-200/50"
+            >
+              <Link
+                to={`/blogDetails/${post.id}`}
+                aria-label={`Read ${post.title}`}
+                className="block overflow-hidden bg-slate-100"
+              >
+                {post.blogImageUrl ? (
+                  <img
+                    src={
+                      post.blogImageUrl.startsWith("//")
+                        ? `https:${post.blogImageUrl}`
+                        : post.blogImageUrl.startsWith("http")
+                          ? post.blogImageUrl
+                          : `https:${post.blogImageUrl}`
+                    }
+                    alt=""
+                    loading="lazy"
+                    className="h-56 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  />
+                ) : (
+                  <div className="flex h-56 items-center justify-center bg-slate-100">
+                    <span className="text-sm font-medium text-slate-400">
+                      Article
+                    </span>
+                  </div>
+                )}
+              </Link>
+
+              <div className="flex flex-1 flex-col p-6 md:p-7">
+                <p className="mb-3 text-xs font-medium uppercase tracking-wider text-slate-500">
+                  {post.blogAuthur}
+                  {post.createdDate && (
+                    <>
+                      <span aria-hidden="true" className="mx-2">
+                        ·
+                      </span>
+                      <time>{post.createdDate}</time>
+                    </>
+                  )}
                 </p>
-                <p className="text-sm text-gray-400 mb-4 flex-grow leading-relaxed line-clamp-3">
+
+                <h3 className="text-xl font-semibold leading-snug text-slate-900 transition-colors group-hover:text-blue-700">
+                  <Link to={`/blogDetails/${post.id}`}>{post.title}</Link>
+                </h3>
+
+                <p className="mt-3 flex-1 text-sm leading-7 text-slate-600 line-clamp-3">
                   {post.blogSummary}
                 </p>
+
                 <Link
                   to={`/blogDetails/${post.id}`}
-                  className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-sm font-semibold px-4 py-2 rounded-md hover:from-blue-600 hover:to-indigo-700 transition-all shadow-sm"
+                  className="mt-6 inline-flex w-fit items-center gap-2 text-sm font-semibold text-slate-900 transition-colors hover:text-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-4"
                 >
-                  Read More
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
+                  Read article
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-200 group-hover:translate-x-1"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
+                    →
+                  </span>
                 </Link>
               </div>
-            </motion.section>
-          ))
-        ) : (
-          <p className="text-center text-gray-400 col-span-full">
-            No blog posts available.
-          </p>
-        )}
-      </div>
-    </div>
+            </motion.article>
+          ))}
+        </div>
+      )}
+
+      {!isLoading && !error && blogPosts.length === 0 && (
+        <p className="py-12 text-center text-sm text-slate-500">
+          No articles are available yet. Please check back soon.
+        </p>
+      )}
+    </section>
   );
 };
 
